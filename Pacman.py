@@ -5,8 +5,8 @@ import config
 class Pacman:
     def __init__(self):
         ## Atributos de posição
-        self.coluna = 1
-        self.linha = 1
+        self.coluna = 16
+        self.linha = 16
 
         ## Atributos de formato
         self.centro_x = int(config.SCR_WIDTH / 2)
@@ -21,11 +21,33 @@ class Pacman:
 
     def calcular_posicionamento(self):
 
-        self.coluna = self.coluna + self.velocidade_x
-        self.linha = self.linha + self.velocidade_y
+        """ Sem bordas:
+            #TO FIX: Origem do eixo Y buga quando o cenário não é quadrado (NxM)
+        if self.centro_x - self.raio >= config.SCR_WIDTH:
+            self.coluna = 0
+        elif self.centro_x + self.raio <= 0:
+            self.coluna = config.TAM_CENARIO
+        else:
+            self.coluna = self.coluna + self.velocidade_x
+
+        if self.centro_y - self.raio >= config.SCR_HEIGHT:
+            self.linha = 0
+        elif self.centro_y + self.raio <= 0:
+            self.linha = config.TAM_CENARIO
+        else:
+            self.linha = self.linha + self.velocidade_y
+            
         self.centro_x = int((self.coluna * self.tamanho) + self.raio)
         self.centro_y = int((self.linha * self.tamanho) + self.raio)
-        
+        """
+
+        ### Com bordas:
+        self.coluna = self.coluna + self.velocidade_x
+        self.linha = self.linha + self.velocidade_y
+
+        self.centro_x = int((self.coluna * self.tamanho) + self.raio)
+        self.centro_y = int((self.linha * self.tamanho) + self.raio)
+
         if self.centro_x + self.raio >= config.SCR_WIDTH:
             self.velocidade_x = 0
         if self.centro_x <= self.raio:
@@ -33,7 +55,7 @@ class Pacman:
         if self.centro_y + self.raio >= config.SCR_HEIGHT:
             self.velocidade_y = 0
         if self.centro_y <= self.raio:
-            self.velocidade_y = 0
+            self.velocidade_y = 0        
 
     def processar_evento(self, evento):
         if evento.type == pygame.KEYDOWN:
