@@ -22,7 +22,7 @@ class Pacman:
     def calcular_posicionamento(self):
 
         """ Sem bordas:
-            #TO FIX: Origem do eixo Y buga quando o cenário não é quadrado (NxM)
+            #TO FIX: Origem do eixo Y buga quando o cenário não é quadrado (NxM) """
         if self.centro_x - self.raio >= config.SCR_WIDTH:
             self.coluna = 0
         elif self.centro_x + self.raio <= 0:
@@ -55,7 +55,7 @@ class Pacman:
         if self.centro_y + self.raio >= config.SCR_HEIGHT:
             self.velocidade_y = 0
         if self.centro_y <= self.raio:
-            self.velocidade_y = 0        
+            self.velocidade_y = 0        """
 
     def processar_evento(self, evento):
         if evento.type == pygame.KEYDOWN:

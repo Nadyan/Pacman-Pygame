@@ -5,7 +5,7 @@ TAM_CENARIO = 28
 SCR_WIDTH = 650
 SCR_HEIGHT = 650
 TAMANHO_PACMAN = SCR_HEIGHT // TAM_CENARIO
-VEL_XY = 0.01 #0.004
+VEL_XY = 0.03 #0.004
 
 CENARIO = [ # 2 - Parede, 0 - Vazio, 1 - Moeda
     [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
