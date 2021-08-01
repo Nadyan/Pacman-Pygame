@@ -5,8 +5,10 @@ import config
 class Pacman:
     def __init__(self):
         ## Atributos de posição
-        self.coluna = 16
-        self.linha = 16
+        self.coluna = config.TAM_CENARIO // 2
+        self.linha = config.TAM_CENARIO // 2
+        self.coluna_intencao = self.coluna # intenção de movimento para validação
+        self.linha_intencao = self.linha
 
         ## Atributos de formato
         self.centro_x = int(config.SCR_WIDTH / 2)
@@ -20,9 +22,35 @@ class Pacman:
         self.cor_olho = config.PRETO
 
     def calcular_posicionamento(self):
+        self.coluna_intencao = self.coluna + self.velocidade_x
+        self.linha_intencao = self.linha + self.velocidade_y
 
-        """ Sem bordas:
-            #TO FIX: Origem do eixo Y buga quando o cenário não é quadrado (NxM) """
+        # validação do movimento intenção pela classe Cenario
+
+    def efetuar_movimento(self):
+        self.linha = self.linha_intencao
+        self.coluna = self.coluna_intencao
+
+        print(self.linha, self.coluna)
+
+        """ 
+            Com bordas:
+        """
+        self.centro_x = int((self.coluna * self.tamanho) + self.raio)
+        self.centro_y = int((self.linha * self.tamanho) + self.raio)
+
+        if self.centro_x + self.raio >= config.SCR_WIDTH:
+            self.velocidade_x = 0
+        if self.centro_x <= self.raio:
+            self.velocidade_x = 0
+        if self.centro_y + self.raio >= config.SCR_HEIGHT:
+            self.velocidade_y = 0
+        if self.centro_y <= self.raio:
+            self.velocidade_y = 0
+
+        """ 
+            Sem bordas:
+            #TO FIX: Origem do eixo Y buga quando o cenário não é quadrado (NxM)
         if self.centro_x - self.raio >= config.SCR_WIDTH:
             self.coluna = 0
         elif self.centro_x + self.raio <= 0:
@@ -40,22 +68,6 @@ class Pacman:
         self.centro_x = int((self.coluna * self.tamanho) + self.raio)
         self.centro_y = int((self.linha * self.tamanho) + self.raio)
         """
-
-        ### Com bordas:
-        self.coluna = self.coluna + self.velocidade_x
-        self.linha = self.linha + self.velocidade_y
-
-        self.centro_x = int((self.coluna * self.tamanho) + self.raio)
-        self.centro_y = int((self.linha * self.tamanho) + self.raio)
-
-        if self.centro_x + self.raio >= config.SCR_WIDTH:
-            self.velocidade_x = 0
-        if self.centro_x <= self.raio:
-            self.velocidade_x = 0
-        if self.centro_y + self.raio >= config.SCR_HEIGHT:
-            self.velocidade_y = 0
-        if self.centro_y <= self.raio:
-            self.velocidade_y = 0        """
 
     def processar_evento(self, evento):
         if evento.type == pygame.KEYDOWN:
