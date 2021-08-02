@@ -31,8 +31,6 @@ class Pacman:
         self.linha = self.linha_intencao
         self.coluna = self.coluna_intencao
 
-        print(self.linha, self.coluna)
-
         """ 
             Com bordas:
         """
